@@ -1,8 +1,21 @@
 #include <stdio.h>
-float somar(float x, float y);
-float subtrair(float x, float y);
-float multiplicar(float x, float y);
-float dividir(float x, float y);
+
+float somar(float num1, float num2) {
+	return num1 + num2;
+}
+
+float subtrair(float num1, float num2) {
+	return num1 - num2;
+}
+
+float multiplicar(float num1, float num2) {
+	return num1 * num2;
+}
+
+float dividir(float num1, float num2) {
+	return num1 / num2;
+}
+
 int main(){
 
 	int opcao;
@@ -51,20 +64,4 @@ int main(){
 	while(opcao != 0);
 	
 	return 0;
-}
-
-float somar(float num1, float num2) {
-	return num1 + num2;
-}
-
-float subtrair(float num1, float num2) {
-	return num1 - num2;
-}
-
-float multiplicar(float num1, float num2) {
-	return num1 * num2;
-}
-
-float dividir(float num1, float num2) {
-	return num1 / num2;
 }
