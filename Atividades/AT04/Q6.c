@@ -18,7 +18,7 @@ int main(){
 
     printf("\n");
 
-	return 0;
+    return 0;
 }
 
 char* ler3Letras() {

@@ -22,7 +22,7 @@ int main(){
     printf("NUMERO 3: %d\n", numeros.num3);
     printf("NUMERO 4: %d\n", numeros.num4);
 
-	return 0;
+    return 0;
 }
 
 Numeros ler4Numeros() {

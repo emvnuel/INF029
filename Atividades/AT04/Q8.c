@@ -34,7 +34,7 @@ int main() {
     printf("CPF DO CLIENTE: %s\n", clienteCadastrado.cpf);
     printf("SEXO DO CLIENTE: %c\n", clienteCadastrado.sexo);
 
-	return 0;
+    return 0;
 }
 
 Cliente cadastrarCliente() {

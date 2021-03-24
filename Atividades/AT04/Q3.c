@@ -22,7 +22,7 @@ int main(){
     else
         printf("FATORIAL: %d\n", resultado);
 
-	return 0;
+    return 0;
 }
 
 int fatorial(int num) {

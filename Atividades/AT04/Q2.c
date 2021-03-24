@@ -25,7 +25,7 @@ int main(){
 
     printf("RESULTADO: %d\n", resultado);
 
-	return 0;
+    return 0;
 }
 
 int subtrai(int num1, int num2, int num3) {
