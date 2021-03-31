@@ -1,10 +1,7 @@
 #include <stdbool.h>
 
 bool eh_bissexto(int ano) {
-    if ( ((ano % 4 == 0) && (ano % 100 != 0)) || (ano % 400 == 0) )
-        return true;
-
-    return false;
+    return ((ano % 4 == 0) && (ano % 100 != 0)) || (ano % 400 == 0);
 }
 
 int ultimo_dia_do_mes(int ano, int mes) {
@@ -28,17 +25,10 @@ int ultimo_dia_do_mes(int ano, int mes) {
 
 bool validar_data(int dia, int mes, int ano) {
     
-    if (ano < 0 || mes < 0 || dia < 0)
+    if (ano < 0 || mes < 0 || dia < 0 || mes > 12)
         return false;
-    
-    if (mes > 12)
-        return false;
-
-    if (dia >= 1 && dia <= ultimo_dia_do_mes(ano, mes))
-        return true;
-    
-
-    return false;
+        
+    return dia >= 1 && dia <= ultimo_dia_do_mes(ano, mes);
 }
 
 bool validar_sexo(char sexo) {
