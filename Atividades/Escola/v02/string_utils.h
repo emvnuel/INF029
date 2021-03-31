@@ -1,0 +1,1 @@
+void remove_nova_linha_fgets(char* string);
