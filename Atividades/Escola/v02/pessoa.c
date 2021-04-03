@@ -6,8 +6,9 @@
 #include "validation_utils.h"
 #include "string_utils.h"
 
-void cadastrar_pessoa(Pessoa *pessoas[], int *pessoas_tamanho);
-void listar_pessoas(Pessoa *pessoas[], int *pessoas_tamanho);
+void cadastrar_pessoa(bool aluno);
+void listar_pessoas(bool aluno);
+void listar_alunos();
 
 void menuPessoa(bool aluno) {
     int opcao;
@@ -17,13 +18,10 @@ void menuPessoa(bool aluno) {
     
     if (aluno) {
         strcpy(opcao_pessoa, "alunos");
-        *pessoas = alunos;
-        pessoas_tamanho = &alunos_tamanho;
+
     }
     else {
         strcpy(opcao_pessoa, "professores");
-        *pessoas = professores;
-        pessoas_tamanho = &professores_tamanho;
     }
 
     do {
@@ -37,11 +35,11 @@ void menuPessoa(bool aluno) {
         switch (opcao){
 
         case 1:
-            cadastrar_pessoa(pessoas, pessoas_tamanho);
+            cadastrar_pessoa(aluno);
             break;
 
         case 2:
-            listar_pessoas(pessoas, pessoas_tamanho);
+            listar_pessoas(aluno);
             break;
 
         }
@@ -50,7 +48,7 @@ void menuPessoa(bool aluno) {
 
 }
 
-void cadastrar_pessoa(Pessoa *pessoas[], int *pessoas_tamanho) {
+void cadastrar_pessoa(bool aluno) {
     Pessoa pessoa;
     int data_nascimento;
 
@@ -64,16 +62,16 @@ void cadastrar_pessoa(Pessoa *pessoas[], int *pessoas_tamanho) {
     fgets(pessoa.matricula, 12, stdin);
     remove_nova_linha_fgets(pessoa.matricula);
 
-    printf("Data de nascimento (no formato DDMMAAAA): ");
+    printf("Data de nascimento (no formato DDMMAAAA):\n");
     scanf("%d", &data_nascimento);
     __fpurge(stdin);
 
-    printf("CPF (somente numeros): ");
+    printf("CPF (somente numeros):\n");
     fgets(pessoa.cpf, 12, stdin);
     __fpurge(stdin);
     remove_nova_linha_fgets(pessoa.cpf);
 
-    printf("Sexo: ");
+    printf("Sexo:\n");
     scanf("%c", &pessoa.sexo);
 
     pessoa.dataNascimento.dia = data_nascimento / 1000000;
@@ -84,36 +82,63 @@ void cadastrar_pessoa(Pessoa *pessoas[], int *pessoas_tamanho) {
         printf("CPF invalido\n");
         return;
     }
+    
     if (!validar_sexo(pessoa.sexo)) {
         printf("Sexo invalido\n");
         return;
     }
+
     if (!validar_data(pessoa.dataNascimento.dia, pessoa.dataNascimento.mes, pessoa.dataNascimento.ano)) {
         printf("Data de nascimento invalida\n");
         return;
     }
 
-    *pessoas[*pessoas_tamanho] = pessoa;
-    *pessoas_tamanho = *pessoas_tamanho + 1;
+    if (aluno) {
+        alunos[alunos_tamanho] = pessoa;
+        alunos_tamanho++;
+    }
+    else {
+        professores[professores_tamanho] = pessoa;
+        professores_tamanho++;
+    }
+
 }
 
-void listar_pessoas(Pessoa *pessoas[], int *pessoas_tamanho) {
+void listar_pessoas(bool aluno) {
+    if (aluno)
+        listar_alunos();
+    else
+        listar_professores();
+}
+
+void listar_alunos() {
     int i;
-
-    if (*pessoas_tamanho == 0)
-        printf("AINDA NAO HA NENHUM REGISTRO\n");
-
-    for (i = 0; i < *pessoas_tamanho; i++) {
-        Pessoa pessoa = *pessoas[i];
+    for (i = 0; i < alunos_tamanho; i++) {
         printf("\n============================");
-        printf("\nNome: %s", pessoa.nome);
-        printf("\nMatricula: %s", pessoa.matricula);
-        printf("\nData de nascimento: %d/%d/%d", pessoa.dataNascimento.dia, 
-                                                    pessoa.dataNascimento.mes, 
-                                                    pessoa.dataNascimento.ano);
+        printf("\nNome: %s", alunos[i].nome);
+        printf("\nMatricula: %s", alunos[i].matricula);
+        printf("\nData de nascimento: %d/%d/%d", alunos[i].dataNascimento.dia, 
+                                                    alunos[i].dataNascimento.mes, 
+                                                    alunos[i].dataNascimento.ano);
 
-        printf("\nCPF: %s", pessoa.cpf);
-        printf("\nSexo: %c", pessoa.sexo);
+        printf("\nCPF: %s", alunos[i].cpf);
+        printf("\nSexo: %c", alunos[i].sexo);
+        printf("\n============================\n");
+    }
+}
+
+void listar_professores() {
+    int i;
+    for (i = 0; i < professores_tamanho; i++) {
+        printf("\n============================");
+        printf("\nNome: %s", professores[i].nome);
+        printf("\nMatricula: %s", professores[i].matricula);
+        printf("\nData de nascimento: %d/%d/%d", professores[i].dataNascimento.dia, 
+                                                    professores[i].dataNascimento.mes, 
+                                                    professores[i].dataNascimento.ano);
+
+        printf("\nCPF: %s", professores[i].cpf);
+        printf("\nSexo: %c", professores[i].sexo);
         printf("\n============================\n");
     }
 }
