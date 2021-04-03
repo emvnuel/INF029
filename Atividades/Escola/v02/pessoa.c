@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include "models.h"
 #include "data.h"
 #include "validation_utils.h"
 #include "string_utils.h"
@@ -9,11 +10,12 @@
 void cadastrar_pessoa(bool aluno);
 void listar_pessoas(bool aluno);
 void listar_alunos();
+void listar_professores();
+Pessoa* obter_professor_por_matricula(int matricula);
+Pessoa* obter_aluno_por_matricula(int matricula);
 
-void menuPessoa(bool aluno) {
+void menu_pessoa(bool aluno) {
     int opcao;
-    Pessoa *pessoas[TAM];
-    int *pessoas_tamanho;
     char opcao_pessoa[12];
     
     if (aluno) {
@@ -58,9 +60,7 @@ void cadastrar_pessoa(bool aluno) {
     fgets(pessoa.nome, 256, stdin);
     remove_nova_linha_fgets(pessoa.nome);
 
-    printf("Digite a matricula:\n");
-    fgets(pessoa.matricula, 12, stdin);
-    remove_nova_linha_fgets(pessoa.matricula);
+    pessoa.matricula = matricula_atual++;
 
     printf("Data de nascimento (no formato DDMMAAAA):\n");
     scanf("%d", &data_nascimento);
@@ -82,7 +82,7 @@ void cadastrar_pessoa(bool aluno) {
         printf("CPF invalido\n");
         return;
     }
-    
+
     if (!validar_sexo(pessoa.sexo)) {
         printf("Sexo invalido\n");
         return;
@@ -113,10 +113,13 @@ void listar_pessoas(bool aluno) {
 
 void listar_alunos() {
     int i;
+    if (alunos_tamanho == 0)
+        printf("Nao ha alunos cadastrados\n");
+
     for (i = 0; i < alunos_tamanho; i++) {
         printf("\n============================");
         printf("\nNome: %s", alunos[i].nome);
-        printf("\nMatricula: %s", alunos[i].matricula);
+        printf("\nMatricula: %d", alunos[i].matricula);
         printf("\nData de nascimento: %d/%d/%d", alunos[i].dataNascimento.dia, 
                                                     alunos[i].dataNascimento.mes, 
                                                     alunos[i].dataNascimento.ano);
@@ -129,10 +132,14 @@ void listar_alunos() {
 
 void listar_professores() {
     int i;
+
+    if (professores_tamanho == 0)
+        printf("Nao ha alunos cadastrados\n");
+
     for (i = 0; i < professores_tamanho; i++) {
         printf("\n============================");
         printf("\nNome: %s", professores[i].nome);
-        printf("\nMatricula: %s", professores[i].matricula);
+        printf("\nMatricula: %d", professores[i].matricula);
         printf("\nData de nascimento: %d/%d/%d", professores[i].dataNascimento.dia, 
                                                     professores[i].dataNascimento.mes, 
                                                     professores[i].dataNascimento.ano);
@@ -141,4 +148,22 @@ void listar_professores() {
         printf("\nSexo: %c", professores[i].sexo);
         printf("\n============================\n");
     }
+}
+
+Pessoa* obter_professor_por_matricula(int matricula) {
+    Pessoa *pessoa;
+    int i;
+    for (i = 0; i < professores_tamanho; i++)
+        if (professores[i].matricula == matricula)
+            pessoa = &professores[i];
+    return pessoa;
+}
+
+Pessoa* obter_aluno_por_matricula(int matricula) {
+    Pessoa *pessoa;
+    int i;
+    for (i = 0; i < alunos_tamanho; i++)
+        if (alunos[i].matricula == matricula)
+            pessoa = &alunos[i];
+    return pessoa;
 }

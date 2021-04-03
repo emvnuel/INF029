@@ -1,5 +1,7 @@
 #include "models.h"
 
-void menuPessoa(bool aluno);
-void cadastrar_pessoa(Pessoa pessoas[], int *pessoas_tamanho);
-void listar_pessoas(Pessoa pessoas[], int pessoas_tamanho);
+void menu_pessoa(bool aluno);
+void cadastrar_pessoa();
+void listar_pessoas(bool aluno);
+Pessoa* obter_professor_por_matricula(int matricula);
+Pessoa* obter_aluno_por_matricula(int matricula);

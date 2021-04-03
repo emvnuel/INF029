@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "pessoa.h"
+#include "disciplina.h"
 
 int main(){
 
@@ -20,12 +21,15 @@ int main(){
         switch(opcao) {
             case 1:
                 aluno = true;
-                menuPessoa(aluno);
+                menu_pessoa(aluno);
                 break;
 
             case 2:
                 aluno = false;
-                menuPessoa(aluno);
+                menu_pessoa(aluno);
+                break;
+            case 3:
+                menu_disciplina();
                 break;
         }
 

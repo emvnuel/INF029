@@ -1,3 +1,6 @@
+ #ifndef MODELS_H
+ #define MODELS_H
+
 typedef struct Data {
     int dia;
     int mes;
@@ -5,7 +8,7 @@ typedef struct Data {
 } Data;
 
 typedef struct Pessoa {
-    char matricula[12];
+    int matricula;
     char nome[256];
     char sexo;
     Data dataNascimento;
@@ -19,3 +22,5 @@ typedef struct Disciplina {
     Pessoa *professor;
     Pessoa *alunos[50];
 } Disciplina;
+
+#endif

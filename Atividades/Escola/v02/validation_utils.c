@@ -1,4 +1,6 @@
 #include <stdbool.h>
+#include "models.h"
+#include "data.h"
 
 bool eh_bissexto(int ano) {
     return ((ano % 4 == 0) && (ano % 100 != 0)) || (ano % 400 == 0);
@@ -82,4 +84,20 @@ bool validar_cpf(char cpfString[12]) {
         return false;
 
     return true;
+}
+
+bool existe_professor_com_matricula(int matricula) {
+    int i;
+    for (i = 0; i < professores_tamanho; i++)
+        if (professores[i].matricula == matricula)
+            return true;
+    return false;
+}
+
+bool existe_aluno_com_matricula(int matricula) {
+    int i;
+    for (i = 0; i < alunos_tamanho; i++)
+        if (alunos[i].matricula == matricula)
+            return true;
+    return false;
 }
