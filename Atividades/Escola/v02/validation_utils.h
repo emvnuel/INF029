@@ -5,3 +5,4 @@ bool validar_sexo(char sexo);
 bool validar_cpf(char cpfString[12]);
 bool existe_professor_com_matricula(int matricula);
 bool existe_aluno_com_matricula(int matricula);
+bool existe_disciplina_com_codigo(char codigo[7]);

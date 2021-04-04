@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 #include "pessoa.h"
@@ -11,6 +12,7 @@ void cadastrar_disciplina();
 void associar_aluno_a_disciplina();
 void listar_disciplinas_sem_alunos();
 void listar_disciplinas_com_alunos();
+Disciplina* obter_disciplina_por_codigo(char *codigo);
 
 void menu_disciplina() {
 
@@ -71,16 +73,55 @@ void cadastrar_disciplina() {
     printf("Digite a matricula do professor da disciplina:\n");
     scanf("%d", &matricula_professor);
 
-    if (!existe_professor_com_matricula(matricula_professor))
+    if (!existe_professor_com_matricula(matricula_professor)) {
         printf("Matricula nao existente\n");
+        return;
+    }
+
+    if (existe_disciplina_com_codigo(disciplina.codigo)) {
+        printf("\nJá existe uma disciplina com o código informado.\n");
+    }
     
     disciplina.professor = obter_professor_por_matricula(matricula_professor);
+
+    disciplina.quantidade_alunos_matriculados = 0;
 
     disciplinas[disciplinas_tamanho] = disciplina;
     disciplinas_tamanho++;
 }
 
 void associar_aluno_a_disciplina() {
+
+    Disciplina *disciplina_selecionada;
+    disciplina_selecionada;
+    char cod[7];
+    int matricula_aluno = 0;
+
+    listar_disciplinas_sem_alunos();
+
+    __fpurge(stdin);
+    printf("Digite o codigo da disciplina que se deseja editar:\n");
+    fgets(cod, 7, stdin);
+    remove_nova_linha_fgets(cod);
+
+    if (!existe_disciplina_com_codigo(cod)) {
+        printf("Nao existe uma disciplina com o codigo %s\n", cod);
+        return;
+    }
+
+    disciplina_selecionada = obter_disciplina_por_codigo(cod);
+
+    listar_pessoas(true);
+
+    printf("Digite a matricula do aluno que se deseja inserir na disciplina %s:\n", disciplina_selecionada->nome);
+    scanf("%d", &matricula_aluno);
+
+    if (!existe_aluno_com_matricula(matricula_aluno) && matricula_aluno != 0) {
+        printf("Nao existe um aluno com a matricula %d\n", matricula_aluno);
+        return;
+    }
+    disciplina_selecionada->alunos[disciplina_selecionada->quantidade_alunos_matriculados] = *obter_aluno_por_matricula(matricula_aluno);
+    disciplina_selecionada->quantidade_alunos_matriculados++;
 
 }
 
@@ -99,5 +140,34 @@ void listar_disciplinas_sem_alunos() {
 }
 
 void listar_disciplinas_com_alunos() {
+    int i;
+    int j;
 
+    for (i = 0; i < disciplinas_tamanho; i++) {
+        printf("\n============================");
+        printf("\nNome: %s", disciplinas[i].nome);
+        printf("\nCod: %s", disciplinas[i].codigo);
+        printf("\nSemestre: %s", disciplinas[i].semestre);
+
+        printf("\nProfessor: %s", disciplinas[i].professor->nome);
+        if (disciplinas[i].quantidade_alunos_matriculados == 0) {
+            printf("\nAinda não há nenhum aluno matriculado na disciplina");
+        }
+        else {
+            printf("\nAlunos:\n");
+            for (j = 0; j < disciplinas[i].quantidade_alunos_matriculados; j++)
+                printf("%s\n",disciplinas[i].alunos[j].nome);
+            
+            printf("\n============================\n");
+        }
+    }
+}
+
+Disciplina* obter_disciplina_por_codigo(char *codigo) {
+    Disciplina* disciplina;
+    int i;
+    for (i = 0; i < disciplinas_tamanho; i++)
+        if (strcmp(disciplinas[i].codigo, codigo) == 0)
+            disciplina = &disciplinas[i];
+    return disciplina;
 }

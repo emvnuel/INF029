@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <string.h>
 #include "models.h"
 #include "data.h"
 
@@ -98,6 +99,22 @@ bool existe_aluno_com_matricula(int matricula) {
     int i;
     for (i = 0; i < alunos_tamanho; i++)
         if (alunos[i].matricula == matricula)
+            return true;
+    return false;
+}
+
+bool existe_disciplina_com_codigo(char *codigo) {
+    int i;
+    for (i = 0; i < disciplinas_tamanho; i++)
+        if (strcmp(disciplinas[i].codigo, codigo) == 0)
+            return true;
+    return false;
+}
+
+bool aluno_esta_matriculado_na_disciplina(char *codigo) {
+    int i;
+    for (i = 0; i < disciplinas_tamanho; i++)
+        if (strcmp(disciplinas[i].codigo, codigo) == 0)
             return true;
     return false;
 }

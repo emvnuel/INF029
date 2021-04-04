@@ -20,7 +20,8 @@ typedef struct Disciplina {
     char codigo[7];
     char semestre[7];
     Pessoa *professor;
-    Pessoa *alunos[50];
+    Pessoa alunos[50];
+    int quantidade_alunos_matriculados;
 } Disciplina;
 
 #endif
