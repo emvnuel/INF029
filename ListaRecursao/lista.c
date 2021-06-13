@@ -17,8 +17,8 @@ int q30(int m, int n);
 
 int main(){
 
-	printf("Fatorioal de 5 = %d\n", q1(5));
-	printf("Fib 12 = %d\n", q2(12));
+    printf("Fatorioal de 5 = %d\n", q1(5));
+    printf("Fib 12 = %d\n", q2(12));
     int arr[] = { 1, 2, 3, 4, 5 };
     printf("Soma arrays de 1 a 5: %d\n", q4(arr, 5));
     printf("Somatorio de 1 a 5: %d\n", q5(5));
